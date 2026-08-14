@@ -1,20 +1,13 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise'); // ✅ CON /promise
 
-const conexion = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT || 4000,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: 'maximuebles',  // ← ESCRIBIMOS EL NOMBRE A MANO ASÍ NO FALLA
-  ssl: { rejectUnauthorized: false }
+  user: process.env.DB_USUARIO,
+  password: process.env.DB_CONTRASENA,
+  database: process.env.DB_NOMBRE,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-conexion.connect((error) => {
-  if (error) {
-    console.log('❌ ERROR CONEXIÓN BASE DE DATOS:', error.message);
-    return;
-  }
-  console.log('✅ CONECTADO A BASE DE DATOS EN LA NUBE');
-});
-
-module.exports = conexion;
+module.exports = pool;
