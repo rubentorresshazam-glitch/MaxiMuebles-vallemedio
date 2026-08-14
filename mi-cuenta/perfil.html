@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil | MaxiMuebles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Rutas absolutas a los estilos -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/perfil.css">
+</head>
+<body>
+
+    <!-- Barra superior -->
+    <section class="topbar">
+        <div class="topbar-container">
+            <div class="topbar-item"><i class="fa-solid fa-truck-fast"></i> Envíos a todo el país</div>
+            <div class="topbar-item"><i class="fa-solid fa-shield-halved"></i> Garantía oficial</div>
+            <div class="topbar-item"><i class="fa-solid fa-lock"></i> Compra segura</div>
+        </div>
+    </section>
+
+    <!-- Encabezado -->
+    <header class="header header-simple">
+        <div class="header-top-container">
+            <div class="header-left">
+                <a href="/index.html" class="logo-link">
+                    <div class="logo-empresa">
+                        <span class="trebol-logo material-symbols-outlined">spa</span>
+                        <span class="texto-logo">MaxiMuebles</span>
+                    </div>
+                </a>
+            </div>
+            <div class="header-right">
+                <a href="/index.html" class="btn-secundario">
+                    <i class="fa-solid fa-arrow-left"></i> Volver a la tienda
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="perfil-page">
+        <div class="perfil-contenedor">
+
+            <h1><i class="fa-solid fa-user-circle"></i> Mi Cuenta</h1>
+
+            <!-- Pestañas de navegación -->
+            <div class="pestanas-perfil">
+                <button class="pestana-perfil activa" onclick="cambiarSeccion('datos')">
+                    <i class="fa-solid fa-address-card"></i> Mis Datos
+                </button>
+                <button class="pestana-perfil" onclick="cambiarSeccion('compras')">
+                    <i class="fa-solid fa-box-archive"></i> Mis Compras
+                </button>
+                <button class="pestana-perfil" onclick="cerrarSesion()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                </button>
+            </div>
+
+            <!-- Sección: Mis Datos -->
+            <section id="seccion-datos" class="seccion-perfil activa">
+                <h2>Información Personal</h2>
+                <form id="formPerfil" class="form-perfil">
+                    <div class="fila-campos">
+                        <div class="campo">
+                            <label for="perfil-nombre">Nombre completo</label>
+                            <input type="text" id="perfil-nombre" required>
+                        </div>
+                        <div class="campo">
+                            <label for="perfil-telefono">Teléfono</label>
+                            <input type="tel" id="perfil-telefono">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="perfil-correo">Correo electrónico</label>
+                        <input type="email" id="perfil-correo" readonly>
+                        <small>El correo no se puede modificar</small>
+                    </div>
+
+                    <div class="campo">
+                        <label for="perfil-clave">Nueva contraseña (dejar vacío si no cambia)</label>
+                        <input type="password" id="perfil-clave" minlength="6" placeholder="Mínimo 6 caracteres">
+                    </div>
+
+                    <div id="mensaje-perfil" class="mensaje oculto"></div>
+
+                    <button type="submit" class="btn-guardar">
+                        <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
+                    </button>
+                </form>
+            </section>
+
+            <!-- Sección: Mis Compras -->
+            <section id="seccion-compras" class="seccion-perfil">
+                <h2>Historial de Compras</h2>
+                <div id="lista-compras-usuario" class="lista-compras">
+                    <p class="mensaje-vacio">Aún no has realizado ninguna compra.</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 MAXIMUEBLES S.R.L | Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS: rutas absolutas -->
+    <script src="/js/api.js"></script>
+    <script src="/js/perfil.js"></script>
+</body>
+</html>

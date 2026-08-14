@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Facturación | MaxiMuebles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/facturacion.css">
+</head>
+<body>
+
+    <!-- Barra superior -->
+    <section class="topbar">
+        <div class="topbar-container">
+            <div class="topbar-item"><i class="fa-solid fa-building"></i> Panel de Administración</div>
+            <div class="topbar-item"><i class="fa-solid fa-file-invoice-dollar"></i> Gestión de Facturación</div>
+            <div class="topbar-item"><i class="fa-solid fa-lock"></i> Acceso exclusivo</div>
+        </div>
+    </section>
+
+    <!-- Encabezado -->
+    <header class="header header-simple">
+        <div class="header-top-container">
+            <div class="header-left">
+                <a href="../index.html" class="logo-link">
+                    <div class="logo-empresa">
+                        <span class="trebol-logo material-symbols-outlined">spa</span>
+                        <span class="texto-logo">MaxiMuebles</span>
+                    </div>
+                </a>
+            </div>
+            <div class="header-right">
+                <a href="confirmacion.html" class="btn-secundario">
+                    <i class="fa-solid fa-arrow-left"></i> Volver
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="facturacion-page">
+        <div class="facturacion-container">
+
+            <h1><i class="fa-solid fa-file-invoice"></i> Gestión de Facturas</h1>
+            <p class="subtitulo">Acá vas a ver todas las compras registradas y realizar todas las acciones de facturación</p>
+
+            <!-- Filtros -->
+            <div class="panel-filtros">
+                <h3>🔍 Buscar y filtrar</h3>
+                <div class="filtros-contenido">
+                    <label for="buscar" class="sr-only">Buscar</label>
+                    <input type="text" id="buscar" placeholder="Buscar por nombre, N° operación o factura..." title="Buscar por nombre, número de operación o factura">
+                    <label for="fecha-filtro" class="sr-only">Filtrar por fecha</label>
+                    <input type="date" id="fecha-filtro" title="Filtrar por fecha de la compra">
+                    <button onclick="cargarListaCompras()" class="btn-filtrar">Aplicar filtros</button>
+                    <button onclick="limpiarFiltros()" class="btn-limpiar">Limpiar</button>
+                </div>
+            </div>
+
+            <!-- Lista de compras -->
+            <div class="panel-lista">
+                <h3>📋 Compras registradas</h3>
+                <div id="lista-compras" class="lista-compras">
+                    <p class="mensaje-vacio">No hay compras registradas todavía.</p>
+                </div>
+            </div>
+
+            <!-- Detalle y acciones de factura -->
+            <div id="panel-detalle" class="panel-detalle oculto">
+                <h3>📄 Detalle de la factura</h3>
+                <div class="detalle-contenido" id="contenido-detalle"></div>
+                <div class="acciones-factura">
+                    <button onclick="imprimirFactura()" class="btn-accion btn-imprimir">
+                        <i class="fa-solid fa-print"></i> Imprimir
+                    </button>
+                    <button onclick="enviarFacturaCorreo()" class="btn-accion btn-correo">
+                        <i class="fa-solid fa-envelope"></i> Enviar por correo
+                    </button>
+                    <button onclick="transmitirARCA()" class="btn-accion btn-afip">
+                        <i class="fa-solid fa-database"></i> Transmitir a ARCA
+                    </button>
+                    <button onclick="cerrarDetalle()" class="btn-accion btn-cerrar">
+                        <i class="fa-solid fa-times"></i> Cerrar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 MAXIMUEBLES S.R.L | CUIT: 30-71500272-4 | Punto de Venta N° 00010</p>
+        </div>
+    </footer>
+
+    <script src="../js/facturacion.js"></script>
+</body>
+</html>

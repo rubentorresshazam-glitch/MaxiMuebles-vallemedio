@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión | MaxiMuebles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Rutas absolutas a los estilos -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/iniciar-sesion.css">
+</head>
+<body>
+
+    <!-- Barra superior -->
+    <section class="topbar">
+        <div class="topbar-container">
+            <div class="topbar-item"><i class="fa-solid fa-truck-fast"></i> Envíos a todo el país</div>
+            <div class="topbar-item"><i class="fa-solid fa-shield-halved"></i> Garantía oficial</div>
+            <div class="topbar-item"><i class="fa-solid fa-lock"></i> Compra segura</div>
+        </div>
+    </section>
+
+    <!-- Encabezado -->
+    <header class="header header-simple">
+        <div class="header-top-container">
+            <div class="header-left">
+                <a href="/index.html" class="logo-link" title="MaxiMuebles - Inicio">
+                    <span>MaxiMuebles</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="sesion-page">
+        <div class="sesion-contenedor">
+
+            <!-- Pestañas corregidas: ambas son botones -->
+            <div class="pestanas">
+                <button class="pestana activa" onclick="cambiarPestana('login')">Iniciar Sesión</button>
+                <button class="pestana" onclick="cambiarPestana('registro')">Crear Cuenta</button>
+            </div>
+
+            <!-- Formulario: Iniciar Sesión -->
+            <div id="form-login" class="sesion-caja activa">
+                <div class="icono-sesion">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h2>Accede a tu cuenta</h2>
+                <p class="subtitulo">Ingresá tus datos para continuar</p>
+
+                <form id="formInicioSesion">
+                    <div class="campo-form">
+                        <label for="correoLogin">Correo electrónico</label>
+                        <input type="email" id="correoLogin" required placeholder="tu@correo.com">
+                    </div>
+
+                    <div class="campo-form">
+                        <label for="claveLogin">Contraseña</label>
+                        <input type="password" id="claveLogin" required placeholder="Ingresá tu contraseña">
+                        <span class="ver-clave" onclick="mostrarClave('claveLogin', 'iconoLogin')">
+                            <i class="fa-solid fa-eye" id="iconoLogin"></i>
+                        </span>
+                    </div>
+
+                    <div id="mensajeLogin" class="mensaje oculto"></div>
+
+                    <button type="submit" class="btn-principal">
+                        <i class="fa-solid fa-right-to-bracket"></i> Ingresar
+                    </button>
+                </form>
+            </div>
+
+            <!-- Formulario: Crear Cuenta → ID CORREGIDO -->
+            <div id="formRegistro" class="sesion-caja">
+                <div class="icono-sesion">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <h2>Creá tu cuenta</h2>
+                <p class="subtitulo">Y disfrutá de beneficios exclusivos</p>
+
+                <form id="formRegistro">
+                    <div class="campo-form">
+                        <label for="nombreRegistro">Nombre completo</label>
+                        <input type="text" id="nombreRegistro" required placeholder="Tu nombre y apellido">
+                    </div>
+
+                    <div class="campo-form">
+                        <label for="correoRegistro">Correo electrónico</label>
+                        <input type="email" id="correoRegistro" required placeholder="tu@correo.com">
+                    </div>
+
+                    <div class="campo-form">
+                        <label for="telefonoRegistro">Teléfono</label>
+                        <input type="tel" id="telefonoRegistro" placeholder="Ej: 294 123-4567">
+                    </div>
+
+                    <div class="campo-form">
+                        <label for="claveRegistro">Crear contraseña</label>
+                        <input type="password" id="claveRegistro" required minlength="6" placeholder="Mínimo 6 caracteres">
+                        <span class="ver-clave" onclick="mostrarClave('claveRegistro', 'iconoRegistro')">
+                            <i class="fa-solid fa-eye" id="iconoRegistro"></i>
+                        </span>
+                    </div>
+
+                    <div id="mensajeRegistro" class="mensaje oculto"></div>
+
+                    <button type="submit" class="btn-principal">
+                        <i class="fa-solid fa-check"></i> Crear cuenta
+                    </button>
+                </form>
+            </div>
+
+            <div class="volver-inicio">
+                <a href="/index.html">← Volver a la tienda</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 MAXIMUEBLES S.R.L | Todos los derechos reservados</p>
+        </div>
+    </footer>
+     
+    <!-- SCRIPTS: rutas absolutas -->
+    <script src="/js/api.js"></script>
+    <script src="/js/iniciar-sesion.js"></script>
+</body>
+</html>

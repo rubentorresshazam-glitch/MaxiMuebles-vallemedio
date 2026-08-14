@@ -1,0 +1,308 @@
+.perfil-page {
+    max-width: 950px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.perfil-contenedor h1 {
+    color: #006633;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Pestañas */
+.pestanas-perfil {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.pestana-perfil {
+    flex: 1;
+    min-width: 180px;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #f1f5f3;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pestana-perfil.activa {
+    background: #008F4C;
+    color: white;
+}
+
+/* Secciones */
+.seccion-perfil {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    display: none;
+}
+
+.seccion-perfil.activa {
+    display: block;
+}
+
+.seccion-perfil h2 {
+    color: #006633;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Formulario */
+.form-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.fila-campos {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.campo {
+    flex: 1;
+    min-width: 280px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #333;
+}
+
+.campo input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d0d9d4;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: #008F4C;
+    box-shadow: 0 0 0 2px rgba(0, 143, 76, 0.15);
+}
+
+.campo input[readonly] {
+    background: #f8f9fa;
+    cursor: not-allowed;
+}
+
+small {
+    color: #777;
+    font-size: 13px;
+}
+
+.btn-guardar {
+    align-self: flex-start;
+    background: #008F4C;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-guardar:hover {
+    background: #00753f;
+}
+
+/* Mensajes */
+.mensaje {
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.mensaje.exito {
+    background: #ecf9f2;
+    border: 1px solid #b7e9cd;
+    color: #006633;
+}
+
+.mensaje.oculto {
+    display: none;
+}
+
+/* Lista de compras */
+.item-compra-usuario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.info-compra p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.estado-pagado {
+    background: #ecf9f2;
+    color: #006633;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.btn-ver-compra {
+    background: #006699;
+    color: white;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Modal detalle */
+.modal-detalle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.modal-contenido {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 550px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.cerrar-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+.total-final {
+    font-size: 18px;
+    margin-top: 15px;
+    color: #006633;
+}
+
+.mensaje-vacio {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+    font-size: 16px;
+}
+
+/* ========== PIE DE PÁGINA — TODO ALINEADO ========== */
+.footer {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    padding: 35px 20px 20px;
+    margin-top: 60px;
+    font-family: inherit;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Logo y eslogan alineados a la izquierda */
+.footer-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+}
+
+.footer-logo {
+    max-height: 60px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-slogan {
+    font-size: 14px;
+    color: #b8b8b8;
+    margin: 0;
+}
+
+/* Enlaces alineados al centro o a la derecha, en línea recta */
+.footer-links-simples {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.footer-links-simples a {
+    color: #cccccc;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.footer-links-simples a:hover {
+    color: #d4a574;
+}
+
+/* Franja inferior completa abajo, alineada al centro */
+.footer-bottom {
+    width: 100%;
+    border-top: 1px solid #333;
+    padding-top: 15px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #888888;
+    text-align: center;
+}
+
+/* En celular se adapta bien */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-logo-area {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+
