@@ -1,5 +1,5 @@
 // ⚠️ BASE URL YA INCLUYE /api — NUNCA REPETIRLO EN LAS LLAMADAS
-const API_URL = 'http://localhost:3000/api';
+const API_URL = '/api';
 
 async function peticion(url, metodo = 'GET', datos = null) {
   const opciones = {
