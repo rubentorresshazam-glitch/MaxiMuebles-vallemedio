@@ -14,9 +14,34 @@ const mpClient = new MercadoPagoConfig({
 // ======================================
 // 🔐 CONFIGURACIÓN CERTIFICADO ARCA/AFIP
 // ======================================
-const rutaCertificado = path.join(__dirname, 'certificados', 'maximuebles.cer');
-const rutaClavePrivada = path.join(__dirname, 'certificados', 'clave-privada.key');
+// ✅ CERTIFICADOS: desde variables en Render, desde archivos en tu PC
+const path = require('path');
+const fs = require('fs');
 
+let certificado, clavePrivada;
+
+if (process.env.CERTIFICADO_ARCA && process.env.CLAVE_PRIVADA_ARCA) {
+  // ✅ En Render → usamos el contenido de las variables
+  certificado = process.env.CERTIFICADO_ARCA.replace(/\\n/g, '\n');
+  clavePrivada = process.env.CLAVE_PRIVADA_ARCA.replace(/\\n/g, '\n');
+  console.log("✅ Certificados cargados desde variables de entorno");
+} else {
+  // ✅ En tu PC → leemos desde los archivos normales
+  const rutaCert = path.join(__dirname, 'certificados', 'maximuebles.cer');
+  const rutaClave = path.join(__dirname, 'certificados', 'clave-privada.key');
+  certificado = fs.readFileSync(rutaCert, 'utf8');
+  clavePrivada = fs.readFileSync(rutaClave, 'utf8');
+  console.log("✅ Certificados cargados desde archivos locales");
+}
+
+// Tus datos de ARCA siguen IGUAL
+const configARCA = {
+  cuit: "30715002724",
+  nombreEmpresa: "MAXIMUEBLES S.R.L.",
+  puntoVenta: 1,
+  certificado: certificado,
+  clavePrivada: clavePrivada
+};
 const certificado = fs.readFileSync(rutaCertificado, 'utf8');
 const clavePrivada = fs.readFileSync(rutaClavePrivada, 'utf8');
 
