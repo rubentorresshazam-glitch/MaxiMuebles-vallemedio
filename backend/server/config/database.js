@@ -1,13 +1,28 @@
-const mysql = require('mysql2/promise'); // ✅ CON /promise
+// ✅ CORRECTO — con /promise al final
+const mysql = require('mysql2/promise');
 
-const pool = mysql.createPool({
+// ✅ Usamos POOL (mejor para Render) y variables con respaldo
+const conexion = mysql.createPool({
   host: process.env.DB_HOST,
-  user: process.env.DB_USUARIO,
-  password: process.env.DB_CONTRASENA,
-  database: process.env.DB_NOMBRE,
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USUARIO || process.env.DB_USER,
+  password: process.env.DB_CONTRASENA || process.env.DB_PASSWORD,
+  database: 'maximuebles',
+  ssl: { rejectUnauthorized: false },
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: 5,
   queueLimit: 0
 });
 
-module.exports = pool;
+// ✅ Verificamos la conexión
+async function probarConexion() {
+  try {
+    await conexion.getConnection();
+    console.log('✅ CONECTADO A BASE DE DATOS EN LA NUBE');
+  } catch (error) {
+    console.log('❌ ERROR CONEXIÓN BASE DE DATOS:', error.message);
+  }
+}
+probarConexion();
+
+module.exports = conexion;
