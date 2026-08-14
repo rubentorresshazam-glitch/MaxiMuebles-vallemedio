@@ -1,5 +1,5 @@
 // ✅ Importamos el Model
-const Usuario = require('../models/Usuario');
+const Usuario = require('../models/usuario.model');
 const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'MaxiMuebles_2026_Secreto';

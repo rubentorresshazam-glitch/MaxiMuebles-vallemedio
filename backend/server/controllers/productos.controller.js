@@ -1,5 +1,5 @@
 // ✅ Importamos el Model
-const Producto = require('../models/Producto');
+const Producto = require('../models/producto.model');
 
 // 📌 OBTENER TODOS LOS PRODUCTOS
 exports.obtenerTodos = async (req, res) => {

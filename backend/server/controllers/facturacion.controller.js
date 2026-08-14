@@ -1,5 +1,5 @@
 // ✅ Importamos el Model
-const Facturacion = require('../models/Facturacion');
+const Facturacion = require('../models/factura.model');
 
 // 📌 SOLICITAR / GUARDAR CORREO PARA FACTURA
 exports.solicitarFactura = async (req, res) => {

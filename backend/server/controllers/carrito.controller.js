@@ -1,5 +1,5 @@
 // ✅ Importamos el Model
-const Carrito = require('../models/Carrito');
+const Carrito = require('../models/carrito.model');
 
 // 📌 Ver carrito
 exports.verCarrito = async (req, res) => {

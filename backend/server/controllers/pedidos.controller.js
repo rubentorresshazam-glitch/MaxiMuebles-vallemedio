@@ -1,6 +1,6 @@
-const Pedido = require('../models/Pedido');
-const Carrito = require('../models/Carrito');
-const Producto = require('../models/Producto');
+const Pedido = require('../models/pedido.model');
+const Carrito = require('../models/carrito.model');
+const Producto = require('../models/producto.model');
 const db = require('../config/database'); // ✅ Mantenemos para la transacción
 
 // 📌 Crear pedido desde el carrito
