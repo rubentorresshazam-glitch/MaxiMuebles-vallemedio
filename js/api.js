@@ -1,4 +1,4 @@
-// ⚠️ BASE URL YA INCLUYE /api — NUNCA REPETIRLO EN LAS LLAMADAS
+// ✅ URL CORREGIDA — funciona en Render y en tu PC
 const API_URL = '/api';
 
 async function peticion(url, metodo = 'GET', datos = null) {
@@ -7,23 +7,19 @@ async function peticion(url, metodo = 'GET', datos = null) {
     headers: { 'Content-Type': 'application/json' }
   };
 
-  // Enviamos token si hay sesión
   const token = localStorage.getItem('token');
   if (token) {
     opciones.headers['Authorization'] = `Bearer ${token}`;
   }
 
-  // Agregamos cuerpo si hay datos
   if (datos) {
     opciones.body = JSON.stringify(datos);
   }
 
   try {
-    // Armamos la dirección final SIN repetir /api
     const res = await fetch(`${API_URL}${url}`, opciones);
     const cuerpo = await res.json();
 
-    // Devolvemos formato uniforme en todas las respuestas
     return {
       ok: res.ok,
       mensaje: cuerpo.mensaje || '',
@@ -36,7 +32,6 @@ async function peticion(url, metodo = 'GET', datos = null) {
   }
 }
 
-// Función reutilizable para agregar al carrito
 async function agregarAlCarrito(producto_id, cantidad = 1) {
   const usuario = JSON.parse(localStorage.getItem('usuario'));
   if (!usuario) {
@@ -59,7 +54,6 @@ async function agregarAlCarrito(producto_id, cantidad = 1) {
   }
 }
 
-// Función reutilizable para el contador del encabezado
 async function actualizarContadorCarrito() {
   const contador = document.getElementById('headerCartCount');
   if (!contador) return;
@@ -85,41 +79,54 @@ async function actualizarContadorCarrito() {
 }
 
 function verDetalles(id) {
-    window.location.href = `/producto-detalles.html?id=${id}`;
+  window.location.href = `/producto-detalles.html?id=${id}`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('formulario-contacto');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const datos = {
+        nombre: document.getElementById('nombre').value.trim(),
+        correo: document.getElementById('correo').value.trim(),
+        telefono: document.getElementById('telefono').value.trim(),
+        asunto: document.getElementById('asunto').value,
+        mensaje: document.getElementById('mensaje').value.trim()
+      };
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const datos = {
-      nombre: document.getElementById('nombre').value.trim(),
-      correo: document.getElementById('correo').value.trim(),
-      telefono: document.getElementById('telefono').value.trim(),
-      asunto: document.getElementById('asunto').value,
-      mensaje: document.getElementById('mensaje').value.trim()
-    };
-
-    try {
-      const respuesta = await fetch('/api/enviar-contacto', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-      });
-
-      const resultado = await respuesta.json();
-
-      if (resultado.exito) {
-        alert(resultado.mensaje);
-        form.reset();
-      } else {
-        alert(resultado.mensaje);
+      try {
+        const respuesta = await fetch('/api/enviar-contacto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(datos)
+        });
+        const resultado = await respuesta.json();
+        if (resultado.exito) {
+          alert(resultado.mensaje);
+          form.reset();
+        } else {
+          alert(resultado.mensaje);
+        }
+      } catch (error) {
+        alert('Error de conexion. Escribinos directamente por WhatsApp.');
+        console.error(error);
       }
-    } catch (error) {
-      alert('Error de conexion. Escribinos directamente por WhatsApp.');
-      console.error(error);
+    });
+  }
+});
+
+// ✅ VERIFICAR SESIÓN AL CARGAR CADA PÁGINA
+document.addEventListener('DOMContentLoaded', function() {
+  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  const token = localStorage.getItem('token');
+
+  if (usuario && token) {
+    console.log('✅ Usuario conectado:', usuario.nombre);
+    const enlaceCuenta = document.querySelector('a[href*="mi-cuenta"], .menu-cuenta, .nav-cuenta');
+    if (enlaceCuenta) {
+      enlaceCuenta.innerHTML = `👋 ${usuario.nombre}`;
+      enlaceCuenta.href = '/mi-cuenta/perfil.html';
     }
-  });
+  }
 });
