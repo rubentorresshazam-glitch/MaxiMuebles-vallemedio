@@ -43,13 +43,12 @@ const configARCA = {
 module.exports = { configARCA };
 
 // ✅ IMPORTAMOS LAS RUTAS
-const rutasUsuarios = require('./routes/usuarios');
-const rutasProductos = require('./routes/productos');
-const rutasCarrito = require('./routes/carrito');
-const rutasPedidos = require('./routes/pedidos');
+const rutasUsuarios = require('./routes/usuarios.routes');
+const rutasProductos = require('./routes/productos.routes');
+const rutasCarrito = require('./routes/carrito.routes');
+const rutasPedidos = require('./routes/pedidos.routes');
 const rutasFacturacion = require('./routes/facturacion.routes');
 const rutasContacto = require('./routes/contacto.routes');
-
 const app = express();
 const PUERTO = process.env.PORT || 10000;
 
