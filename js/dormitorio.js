@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  const CATEGORIA = "Colchones y Sommiers";
+  const CATEGORIA = "dormitorio";
   const grilla = document.querySelector('.productos-grid');
   if (!grilla) return;
 
