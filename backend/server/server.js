@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const fs = require('fs'); // ✅ AGREGADO: para leer archivos del certificado
+const fs = require('fs');
 
 // ✅ CONEXIONES
 const db = require('./config/database');
@@ -14,19 +14,15 @@ const mpClient = new MercadoPagoConfig({
 // ======================================
 // 🔐 CONFIGURACIÓN CERTIFICADO ARCA/AFIP
 // ======================================
-// ✅ CERTIFICADOS: desde variables en Render, desde archivos en tu PC
-const path = require('path');
-const fs = require('fs');
-
 let certificado, clavePrivada;
 
 if (process.env.CERTIFICADO_ARCA && process.env.CLAVE_PRIVADA_ARCA) {
-  // ✅ En Render → usamos el contenido de las variables
+  // ✅ En Render → desde variables de entorno
   certificado = process.env.CERTIFICADO_ARCA.replace(/\\n/g, '\n');
   clavePrivada = process.env.CLAVE_PRIVADA_ARCA.replace(/\\n/g, '\n');
   console.log("✅ Certificados cargados desde variables de entorno");
 } else {
-  // ✅ En tu PC → leemos desde los archivos normales
+  // ✅ En tu PC → desde archivos locales
   const rutaCert = path.join(__dirname, 'certificados', 'maximuebles.cer');
   const rutaClave = path.join(__dirname, 'certificados', 'clave-privada.key');
   certificado = fs.readFileSync(rutaCert, 'utf8');
@@ -34,24 +30,12 @@ if (process.env.CERTIFICADO_ARCA && process.env.CLAVE_PRIVADA_ARCA) {
   console.log("✅ Certificados cargados desde archivos locales");
 }
 
-// Tus datos de ARCA siguen IGUAL
 const configARCA = {
   cuit: "30715002724",
   nombreEmpresa: "MAXIMUEBLES S.R.L.",
   puntoVenta: 1,
   certificado: certificado,
-  clavePrivada: clavePrivada
-};
-const certificado = fs.readFileSync(rutaCertificado, 'utf8');
-const clavePrivada = fs.readFileSync(rutaClavePrivada, 'utf8');
-
-const configARCA = {
-  certificado: certificado,
   clavePrivada: clavePrivada,
-  cuit: "30715002724",
-  puntoVenta: 1,
-  nombreEmpresa: "MAXIMUBLES",
-  contraseñaCertificado: "", // ✅ SIN CONTRASEÑA — funciona así nomás
   urlWSAA: "https://wsaahomo.afip.gov.ar/wsaa/services/LoginTicket",
   urlWSFE: "https://wsfe1.afip.gov.ar/ws/services/FConsulta"
 };
@@ -63,7 +47,7 @@ const rutasUsuarios = require('./routes/usuarios');
 const rutasProductos = require('./routes/productos');
 const rutasCarrito = require('./routes/carrito');
 const rutasPedidos = require('./routes/pedidos');
-const rutasFacturacion = require('./routes/facturacion');
+const rutasFacturacion = require('./routes/facturacion.routes');
 const rutasContacto = require('./routes/contacto.routes');
 
 const app = express();
@@ -79,7 +63,7 @@ app.use(express.static(path.join(__dirname, '../..')));
 app.get('/api/prueba', (req, res) => res.json({ ok: true, mensaje: '✅ SERVIDOR Y BASE CONECTADOS' }));
 
 // ======================================
-// USAMOS LAS RUTAS ORDENADAS
+// 📋 RUTAS DEL SERVIDOR
 // ======================================
 app.use('/api/auth', rutasUsuarios);
 app.use('/api/productos', rutasProductos);
@@ -89,7 +73,7 @@ app.use('/api', rutasFacturacion);
 app.use('/api', rutasContacto);
 
 // ======================================
-// MERCADO PAGO / PAGO → SE QUEDA IGUAL
+// 💳 MERCADO PAGO — PAGO
 // ======================================
 app.post('/api/pagar', async (req, res) => {
   try {
@@ -145,14 +129,14 @@ app.post('/api/pagar', async (req, res) => {
 });
 
 // ======================================
-// MANEJADOR DE ERRORES
+// ⚠️ MANEJADOR DE ERRORES
 // ======================================
 const { noEncontrado, manejadorErrores } = require('./middlewares/errores');
 app.use(noEncontrado);
 app.use(manejadorErrores);
 
 // ======================================
-// INICIAR SERVIDOR
+// 🚀 INICIAR SERVIDOR
 // ======================================
 app.listen(PUERTO, () => {
   console.log(`✅ Servidor corriendo en el puerto ${PUERTO}`);
