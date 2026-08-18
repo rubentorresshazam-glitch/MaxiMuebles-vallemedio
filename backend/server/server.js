@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 
+
 // ✅ CONEXIONES
 const db = require('./config/database');
 const { MercadoPagoConfig, Preference } = require('mercadopago');
@@ -11,18 +12,17 @@ const mpClient = new MercadoPagoConfig({
   accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN 
 });
 
+
 // ======================================
 // 🔐 CONFIGURACIÓN CERTIFICADO ARCA/AFIP
 // ======================================
 let certificado, clavePrivada;
 
 if (process.env.CERTIFICADO_ARCA && process.env.CLAVE_PRIVADA_ARCA) {
-  // ✅ En Render → desde variables de entorno
   certificado = process.env.CERTIFICADO_ARCA.replace(/\\n/g, '\n');
   clavePrivada = process.env.CLAVE_PRIVADA_ARCA.replace(/\\n/g, '\n');
   console.log("✅ Certificados cargados desde variables de entorno");
 } else {
-  // ✅ En tu PC → desde archivos locales
   const rutaCert = path.join(__dirname, 'certificados', 'maximuebles.cer');
   const rutaClave = path.join(__dirname, 'certificados', 'clave-privada.key');
   certificado = fs.readFileSync(rutaCert, 'utf8');
@@ -42,15 +42,21 @@ const configARCA = {
 
 module.exports = { configARCA };
 
-// ✅ IMPORTAMOS LAS RUTAS
+
+// ✅ IMPORTAMOS LAS RUTAS — TODAS CORREGIDAS
 const rutasUsuarios = require('./routes/usuarios.routes');
 const rutasProductos = require('./routes/productos.routes');
 const rutasCarrito = require('./routes/carrito.routes');
 const rutasPedidos = require('./routes/pedidos.routes');
-const { router: rutasFacturacion, procesarFacturacion } = require('./routes/facturacion.routes.js');
+
+// ⚠️ CORREGIDO: facturación.routes exporta directo el router, NO { router }
+const rutasFacturacion = require('./routes/facturacion.routes.js');
+
 const rutasContacto = require('./routes/contacto.routes');
+
 const app = express();
 const PUERTO = process.env.PORT || 10000;
+
 
 app.use(cors({ origin: "*" }));
 app.options('*', cors());
@@ -58,8 +64,10 @@ app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../..')));
 
+
 // ✅ RUTA DE PRUEBA
 app.get('/api/prueba', (req, res) => res.json({ ok: true, mensaje: '✅ SERVIDOR Y BASE CONECTADOS' }));
+
 
 // ======================================
 // 📋 RUTAS DEL SERVIDOR
@@ -68,8 +76,9 @@ app.use('/api/auth', rutasUsuarios);
 app.use('/api/productos', rutasProductos);
 app.use('/api/carrito', rutasCarrito);
 app.use('/api/pedidos', rutasPedidos);
-app.use('/api', rutasFacturacion);
+app.use('/api', rutasFacturacion);  // ✅ CORREGIDO
 app.use('/api', rutasContacto);
+
 
 // ======================================
 // 💳 MERCADO PAGO — PAGO
@@ -127,12 +136,14 @@ app.post('/api/pagar', async (req, res) => {
   }
 });
 
+
 // ======================================
 // ⚠️ MANEJADOR DE ERRORES
 // ======================================
 const { noEncontrado, manejadorErrores } = require('./middlewares/errores');
 app.use(noEncontrado);
 app.use(manejadorErrores);
+
 
 // ======================================
 // 🚀 INICIAR SERVIDOR
