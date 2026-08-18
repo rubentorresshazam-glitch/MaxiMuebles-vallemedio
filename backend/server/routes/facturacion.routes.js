@@ -112,4 +112,3 @@ router.post('/facturar-pedido/:id', async (req, res) => {
 
 // ✅ EXPORTACIÓN CORRECTA — SOLO EL ROUTER
 module.exports = router;
-module.exports.procesarFacturacion = procesarFacturacion;
