@@ -30,7 +30,7 @@
     <header class="header header-simple">
         <div class="header-top-container">
             <div class="header-left">
-                <a href="/index.html" class="logo-link">
+                <a href="/index.html" class="logo-link" aria-label="Ir a la página principal" title="Ir a la página principal">
                 </a>
             </div>
             <div class="header-right">
@@ -47,14 +47,14 @@
             <h1>Tu Carrito de Compras</h1>
 
             <!-- CARRITO VACÍO -->
-            <div id="carrito-vacio" class="cart-empty" style="display: none;">
+            <div id="carrito-vacio" class="cart-empty">
                 <i class="fa-solid fa-cart-shopping fa-3x"></i>
                 <p>No tenés productos agregados todavía.</p>
                 <a href="/index.html" class="btn btn-seguir">Seguir comprando</a>
             </div>
 
             <!-- CARRITO CON PRODUCTOS -->
-            <div id="carrito-contenido" class="cart-content" style="display: none;">
+            <div id="carrito-contenido" class="cart-content">
                 <div class="cart-header">
                     <div class="col-producto">Producto</div>
                     <div class="col-precio">Precio</div>
@@ -73,7 +73,6 @@
                     <div class="grupo-botones">
                         <a href="/index.html" class="btn btn-seguir">Seguir comprando</a>
                         <a href="/mi-cuenta/checkout.html" class="btn btn-continuar">Continuar con la compra</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -88,7 +87,6 @@
 
     <!-- SCRIPTS: rutas absolutas y orden correcto -->
     <script src="/js/api.js"></script>
-    <script src="/js/menu-cuenta.js"></script>
     <script src="/js/carrito.js"></script>
 </body>
 </html>
