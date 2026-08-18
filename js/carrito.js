@@ -3,11 +3,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   await cargarResumenCarrito();
 });
 
-// ✅ FUNCIÓN NUEVA: AGREGAR PRODUCTO AL CARRITO (SIN ROMPER NADA)
+// ✅ AGREGAR PRODUCTO AL CARRITO
 async function agregarAlCarrito(producto) {
   const usuarioGuardado = localStorage.getItem('usuario');
-
-  // Si hay sesión iniciada → guarda directo en tu cuenta
   if (usuarioGuardado) {
     const usuario = JSON.parse(usuarioGuardado);
     try {
@@ -27,13 +25,12 @@ async function agregarAlCarrito(producto) {
       return false;
     }
   } else {
-    // Si no hay sesión → avisa claro y simple
     alert('Iniciá sesión para agregar productos al carrito');
     return false;
   }
 }
 
-// ✅ TU FUNCIÓN ORIGINAL, SIN CAMBIOS
+// ✅ CARGAR CARRITO CORREGIDO
 async function cargarResumenCarrito() {
   const grilla = document.getElementById("lista-productos");
   const vacio = document.getElementById("carrito-vacio");
@@ -42,7 +39,6 @@ async function cargarResumenCarrito() {
   const totalElem = document.getElementById("total");
 
   if (!grilla) return;
-
   grilla.innerHTML = `<p style="padding:20px;text-align:center;">Cargando carrito...</p>`;
 
   const usuarioGuardado = localStorage.getItem('usuario');
@@ -105,32 +101,42 @@ async function cargarResumenCarrito() {
     subtotalElem.textContent = `$ ${total.toLocaleString('es-AR')}`;
     totalElem.textContent = `$ ${total.toLocaleString('es-AR')}`;
 
-    // Botones modificar cantidad
+    // ✅ BOTÓN MENOS — CORREGIDO
     document.querySelectorAll('.btn-menos').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const id = e.target.dataset.id;
         let cant = parseInt(e.target.dataset.cant) - 1;
         if (cant < 1) cant = 1;
-        await peticion(`/carrito/${id}`, 'PUT', { cantidad: cant });
+        await peticion(`/carrito/${id}`, 'PUT', { 
+          cantidad: cant,
+          usuario_id: usuario.id
+        });
         await cargarResumenCarrito();
         await actualizarContadorCarrito();
       });
     });
 
+    // ✅ BOTÓN MÁS — CORREGIDO
     document.querySelectorAll('.btn-mas').forEach(btn => {
       btn.addEventListener('click', async (e) => {
-        const id = parseInt(e.target.dataset.id) + 1;
-        await peticion(`/carrito/${id}`, 'PUT', { cantidad: cant });
+        const id = e.target.dataset.id;
+        let cant = parseInt(e.target.dataset.cant) + 1;
+        await peticion(`/carrito/${id}`, 'PUT', { 
+          cantidad: cant,
+          usuario_id: usuario.id
+        });
         await cargarResumenCarrito();
         await actualizarContadorCarrito();
       });
     });
 
-    // Botones borrar
+    // ✅ BOTÓN ELIMINAR — CORREGIDO
     document.querySelectorAll('.btn-quitar').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const id = e.target.closest('.btn-quitar').dataset.id;
-        await peticion(`/carrito/${id}`, 'DELETE');
+        await peticion(`/carrito/${id}`, 'DELETE', {
+          usuario_id: usuario.id
+        });
         await cargarResumenCarrito();
         await actualizarContadorCarrito();
       });
@@ -142,7 +148,7 @@ async function cargarResumenCarrito() {
   }
 }
 
-// ✅ FUNCIÓN PARA ACTUALIZAR EL CONTADOR EN TODAS LAS PÁGINAS
+// ✅ CONTADOR DEL CARRITO
 async function actualizarContadorCarrito() {
   const contador = document.getElementById('headerCartCount');
   if (!contador) return;
@@ -169,7 +175,7 @@ async function actualizarContadorCarrito() {
   }
 }
 
-// ✅ EJECUTA AUTOMÁTICAMENTE EN CADA PÁGINA QUE CARGUES
+// ✅ ACTUALIZAR CONTADOR EN TODAS LAS PÁGINAS
 document.addEventListener('DOMContentLoaded', async () => {
   await actualizarContadorCarrito();
 });
