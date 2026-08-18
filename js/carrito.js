@@ -101,7 +101,7 @@ async function cargarResumenCarrito() {
     subtotalElem.textContent = `$ ${total.toLocaleString('es-AR')}`;
     totalElem.textContent = `$ ${total.toLocaleString('es-AR')}`;
 
-    // ✅ BOTÓN MENOS — CORREGIDO
+    // ✅ BOTÓN MENOS
     document.querySelectorAll('.btn-menos').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const id = e.target.dataset.id;
@@ -116,7 +116,7 @@ async function cargarResumenCarrito() {
       });
     });
 
-    // ✅ BOTÓN MÁS — CORREGIDO
+    // ✅ BOTÓN MÁS
     document.querySelectorAll('.btn-mas').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const id = e.target.dataset.id;
@@ -130,7 +130,7 @@ async function cargarResumenCarrito() {
       });
     });
 
-    // ✅ BOTÓN ELIMINAR — CORREGIDO
+    // ✅ BOTÓN ELIMINAR
     document.querySelectorAll('.btn-quitar').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const id = e.target.closest('.btn-quitar').dataset.id;
@@ -175,7 +175,6 @@ async function actualizarContadorCarrito() {
   }
 }
 
-// ✅ ACTUALIZAR CONTADOR EN TODAS LAS PÁGINAS
 document.addEventListener('DOMContentLoaded', async () => {
   await actualizarContadorCarrito();
 });
