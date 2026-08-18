@@ -43,13 +43,13 @@ const configARCA = {
 module.exports = { configARCA };
 
 
-// ✅ IMPORTAMOS LAS RUTAS — TODAS CORREGIDAS
+// ✅ RUTAS — TODAS CORREGIDAS
 const rutasUsuarios = require('./routes/usuarios.routes');
 const rutasProductos = require('./routes/productos.routes');
 const rutasCarrito = require('./routes/carrito.routes');
 const rutasPedidos = require('./routes/pedidos.routes');
 
-// ⚠️ CORREGIDO: facturación.routes exporta directo el router, NO { router }
+// ⚠️ LÍNEA 77 CORREGIDA — SIN { router }
 const rutasFacturacion = require('./routes/facturacion.routes.js');
 
 const rutasContacto = require('./routes/contacto.routes');
@@ -70,13 +70,13 @@ app.get('/api/prueba', (req, res) => res.json({ ok: true, mensaje: '✅ SERVIDOR
 
 
 // ======================================
-// 📋 RUTAS DEL SERVIDOR
+// 📋 RUTAS DEL SERVIDOR — SIN DUPLICADOS
 // ======================================
 app.use('/api/auth', rutasUsuarios);
 app.use('/api/productos', rutasProductos);
 app.use('/api/carrito', rutasCarrito);
 app.use('/api/pedidos', rutasPedidos);
-app.use('/api', rutasFacturacion);  // ✅ CORREGIDO
+app.use('/api', rutasFacturacion);
 app.use('/api', rutasContacto);
 
 
