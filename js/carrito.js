@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   await cargarResumenCarrito();
 });
 
-// ✅ AGREGAR PRODUCTO AL CARRITO
 async function agregarAlCarrito(producto) {
   const usuarioGuardado = localStorage.getItem('usuario');
   if (usuarioGuardado) {
@@ -30,7 +29,6 @@ async function agregarAlCarrito(producto) {
   }
 }
 
-// ✅ CARGAR CARRITO CORREGIDO
 async function cargarResumenCarrito() {
   const grilla = document.getElementById("lista-productos");
   const vacio = document.getElementById("carrito-vacio");
@@ -45,7 +43,7 @@ async function cargarResumenCarrito() {
   if (!usuarioGuardado) {
     vacio.style.display = "block";
     contenido.style.display = "none";
-    grilla.innerHTML = `<p style="padding:20px;text-align:center;">Tenés que iniciar sesión primero</p>`;
+    grilla.innerHTML = `<p style="padding:20px;text-align:center;">Iniciá sesión primero</p>`;
     return;
   }
 
@@ -79,9 +77,7 @@ async function cargarResumenCarrito() {
 
       grilla.innerHTML += `
         <div class="fila-producto">
-          <div class="col-producto">
-            <strong style="color:#222; font-size:15px;">${nombreProducto}</strong>
-          </div>
+          <div class="col-producto"><strong>${nombreProducto}</strong></div>
           <div class="col-precio">$ ${precio.toLocaleString('es-AR')}</div>
           <div class="col-cantidad">
             <button class="btn-menos" data-id="${item.id}" data-cant="${cant}">-</button>
@@ -101,42 +97,31 @@ async function cargarResumenCarrito() {
     subtotalElem.textContent = `$ ${total.toLocaleString('es-AR')}`;
     totalElem.textContent = `$ ${total.toLocaleString('es-AR')}`;
 
-    // ✅ BOTÓN MENOS
     document.querySelectorAll('.btn-menos').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const id = e.target.dataset.id;
         let cant = parseInt(e.target.dataset.cant) - 1;
         if (cant < 1) cant = 1;
-        await peticion(`/carrito/${id}`, 'PUT', { 
-          cantidad: cant,
-          usuario_id: usuario.id
-        });
+        await peticion(`/carrito/${id}`, 'PUT', { cantidad: cant, usuario_id: usuario.id });
         await cargarResumenCarrito();
         await actualizarContadorCarrito();
       });
     });
 
-    // ✅ BOTÓN MÁS
     document.querySelectorAll('.btn-mas').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const id = e.target.dataset.id;
         let cant = parseInt(e.target.dataset.cant) + 1;
-        await peticion(`/carrito/${id}`, 'PUT', { 
-          cantidad: cant,
-          usuario_id: usuario.id
-        });
+        await peticion(`/carrito/${id}`, 'PUT', { cantidad: cant, usuario_id: usuario.id });
         await cargarResumenCarrito();
         await actualizarContadorCarrito();
       });
     });
 
-    // ✅ BOTÓN ELIMINAR
     document.querySelectorAll('.btn-quitar').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const id = e.target.closest('.btn-quitar').dataset.id;
-        await peticion(`/carrito/${id}`, 'DELETE', {
-          usuario_id: usuario.id
-        });
+        await peticion(`/carrito/${id}`, 'DELETE', { usuario_id: usuario.id });
         await cargarResumenCarrito();
         await actualizarContadorCarrito();
       });
@@ -148,31 +133,20 @@ async function cargarResumenCarrito() {
   }
 }
 
-// ✅ CONTADOR DEL CARRITO
 async function actualizarContadorCarrito() {
   const contador = document.getElementById('headerCartCount');
   if (!contador) return;
-
   const usuarioGuardado = localStorage.getItem('usuario');
-  if (!usuarioGuardado) {
-    contador.textContent = '0';
-    return;
-  }
-
+  if (!usuarioGuardado) { contador.textContent = '0'; return; }
   try {
     const usuario = JSON.parse(usuarioGuardado);
     const res = await peticion(`/carrito?usuario_id=${usuario.id}`);
-    
     let items = [];
     if (Array.isArray(res.datos)) items = res.datos;
     else if (Array.isArray(res)) items = res;
-
-    const total = items.reduce((suma, item) => suma + Number(item.cantidad), 0);
+    const total = items.reduce((s, i) => s + Number(i.cantidad), 0);
     contador.textContent = total;
-  } catch (error) {
-    console.error('Error al actualizar contador:', error);
-    contador.textContent = '0';
-  }
+  } catch { contador.textContent = '0'; }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

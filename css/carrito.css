@@ -251,3 +251,12 @@
     height: 100px; /* Antes era 40px → proporcionalmente más grande */
     width: auto;
 }
+
+/* Asegurar que el botón sea visible y no se tape */
+.btn-continuar {
+  position: relative !important;
+  z-index: 100 !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
