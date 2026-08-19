@@ -49,7 +49,7 @@ const rutasProductos = require('./routes/productos.routes');
 const rutasCarrito = require('./routes/carrito.routes');
 const rutasPedidos = require('./routes/pedidos.routes');
 
-// ⚠️ LÍNEA 77 CORREGIDA — SIN { router }
+// ✅ BIEN — importa directo el router
 const rutasFacturacion = require('./routes/facturacion.routes.js');
 
 const rutasContacto = require('./routes/contacto.routes');
