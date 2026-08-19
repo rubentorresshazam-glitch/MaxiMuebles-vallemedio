@@ -110,5 +110,5 @@ router.post('/facturar-pedido/:id', async (req, res) => {
 });
 
 
-// ✅ EXPORTACIÓN CORRECTA — SOLO EL ROUTER
+// ✅ BIEN — exporta el router directamente
 module.exports = router;
