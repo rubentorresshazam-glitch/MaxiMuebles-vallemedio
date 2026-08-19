@@ -18,18 +18,25 @@ const mpClient = new MercadoPagoConfig({
 // ======================================
 let certificado, clavePrivada;
 
-if (process.env.CERTIFICADO_ARCA && process.env.CLAVE_PRIVADA_ARCA) {
-  certificado = process.env.CERTIFICADO_ARCA.replace(/\\n/g, '\n');
-  clavePrivada = process.env.CLAVE_PRIVADA_ARCA.replace(/\\n/g, '\n');
+// ✅ PRIMERO: BUSCAR EN VARIABLES DE ENTORNO (Render) — NOMBRES COINCIDEN
+if (process.env.ARCA_CERTIFICADO && process.env.ARCA_CLAVE_PRIVADA) {
+  certificado = process.env.ARCA_CERTIFICADO.replace(/\\n/g, '\n');
+  clavePrivada = process.env.ARCA_CLAVE_PRIVADA.replace(/\\n/g, '\n');
   console.log("✅ Certificados cargados desde variables de entorno");
 } else {
-  const rutaCert = path.join(__dirname, 'certificados', 'maximuebles.cer');
-  const rutaClave = path.join(__dirname, 'certificados', 'clave-privada.key');
-  certificado = fs.readFileSync(rutaCert, 'utf8');
-  clavePrivada = fs.readFileSync(rutaClave, 'utf8');
-  console.log("✅ Certificados cargados desde archivos locales");
+  // ✅ SI NO ESTÁN → INTENTAR DESDE ARCHIVOS (solo en tu PC)
+  try {
+    const rutaCert = path.join(__dirname, 'certificados', 'maximuebles.cer');
+    const rutaClave = path.join(__dirname, 'certificados', 'clave-privada.key');
+    certificado = fs.readFileSync(rutaCert, 'utf8');
+    clavePrivada = fs.readFileSync(rutaClave, 'utf8');
+    console.log("✅ Certificados cargados desde archivos locales");
+  } catch {
+    console.warn("⚠️ No se encontraron certificados — facturación AFIP no funcionará");
+    certificado = "";
+    clavePrivada = "";
+  }
 }
-
 const configARCA = {
   cuit: "30715002724",
   nombreEmpresa: "MAXIMUEBLES S.R.L.",
